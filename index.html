@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>System</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    color: white;
+    text-align: center;
+}
+
+/* Apple logo */
+.logo {
+    width: 180px;
+    height: auto;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Subtle brightness pulse */
+@keyframes pulse {
+    0%   { filter: brightness(1); }
+    50%  { filter: brightness(1.12); }
+    100% { filter: brightness(1); }
+}
+
+.status-text {
+    margin-top: 35px;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.loading-container {
+    width: 220px;
+    height: 3px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    margin-top: 25px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.loading-bar {
+    width: 0%;
+    height: 100%;
+    background: white;
+    border-radius: 10px;
+    transition: width 0.2s linear;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Your Wikimedia Apple logo -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Apple_logo_white.svg/250px-Apple_logo_white.svg.png"
+     class="logo" id="logo">
+
+<div class="status-text" id="status">
+Performing Hard Reset
+</div>
+
+<div class="loading-container" id="loader">
+    <div class="loading-bar" id="bar"></div>
+</div>
+
+<script>
+let progress = 0;
+let bar = document.getElementById("bar");
+let loader = document.getElementById("loader");
+let logo = document.getElementById("logo");
+let status = document.getElementById("status");
+
+// Add subtle pulse after fade
+setTimeout(() => {
+    logo.style.animation += ", pulse 2.5s infinite ease-in-out";
+}, 1500);
+
+// Show loader shortly after
+setTimeout(() => {
+    loader.style.opacity = 1;
+    simulateBoot();
+}, 1800);
+
+function simulateBoot() {
+
+    function step() {
+
+        if (progress < 100) {
+
+            // Faster progress increments
+            if (progress < 30) {
+                progress += Math.random() * 5;
+            } else if (progress < 85) {
+                progress += Math.random() * 7;
+            } else {
+                progress += Math.random() * 2;
+                status.innerText = "Rebuilding system cache...";
+            }
+
+            if (progress > 100) progress = 100;
+            bar.style.width = progress + "%";
+
+            setTimeout(step, Math.random() * 120 + 60);
+        } else {
+            // Stuck on rebooting screen
+            status.innerText = "Rebooting Device…";
+            bar.style.width = "100%";
+            loader.style.opacity = 1; // keep bar visible
+        }
+    }
+
+    step();
+}
+</script>
+
+</body>
+</html>
