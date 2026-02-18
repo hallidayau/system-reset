@@ -126,7 +126,7 @@ function simulateBoot() {
             setTimeout(step, Math.random() * 120 + 60);
         } else {
             // Stuck on rebooting screen
-            status.innerText = "Rebooting Device…";
+            status.innerText = "Erasing iPhone…";
             bar.style.width = "100%";
             loader.style.opacity = 1; // keep bar visible
         }
@@ -138,6 +138,7 @@ function simulateBoot() {
 
 </body>
 </html>
+
 
 
 
