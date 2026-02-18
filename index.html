@@ -25,10 +25,12 @@ html, body {
 
 /* Apple logo */
 .logo {
-    width: 145px;   /* better proportion */
+    width: 145px;
     height: auto;
     opacity: 0;
     animation: fadeIn 1.5s ease forwards;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 /* Fade in animation */
@@ -136,5 +138,6 @@ function simulateBoot() {
 
 </body>
 </html>
+
 
 
